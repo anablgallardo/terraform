@@ -6,6 +6,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    services:
+      localstack:
+        image: localstack/localstack:2.3
+        ports:
+          - "4566:4566"
     strategy:
       matrix:
         folder:
@@ -20,7 +25,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.0.11
-          
+
       - name: Terraform Init
         working-directory: ${{ matrix.folder }}
         run: terraform init
@@ -31,6 +36,6 @@ jobs:
 
       - name: Terraform Apply
         working-directory: ${{ matrix.folder }}
-        run: terraform apply
+        run: terraform apply -auto-approve
 
         
