@@ -1,0 +1,1 @@
+[![Terraform Validate](https://github.com/anablgallardo/terraform/actions/workflows/validate-terraform/badge.svg)]
