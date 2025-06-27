@@ -1,0 +1,36 @@
+name: Terraform Deploy
+on:
+  push:
+    branches:
+      - main  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder:
+          - tarea1
+          - tarea2 
+          - tarea4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.0.11
+          
+      - name: Terraform Init
+        working-directory: ${{ matrix.folder }}
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: ${{ matrix.folder }}
+        run: terraform plan
+
+      - name: Terraform Apply
+        working-directory: ${{ matrix.folder }}
+        run: terraform apply
+
+        
