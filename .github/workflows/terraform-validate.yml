@@ -1,0 +1,29 @@
+name: Terraform Validate
+on:
+  push:
+    branches:
+      - main  
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder:
+          - tarea1
+          - tarea2 
+          - tarea3 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.0.11
+      - name: Terraform Init
+        working-directory: ${{ matrix.folder }}
+        run: terraform init
+
+      - name: Terraform Validate
+        working-directory: ${{ matrix.folder }}
+        run: terraform validate
